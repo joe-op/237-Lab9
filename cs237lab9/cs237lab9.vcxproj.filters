@@ -29,5 +29,8 @@
     <ClCompile Include="intBinTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="testIntTreeNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
