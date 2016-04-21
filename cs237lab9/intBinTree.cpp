@@ -10,8 +10,6 @@ intBinTree::intBinTree() {
 
 
 intBinTree::intBinTree(const intBinTree & T) {
-	//TODO: deep copy
-	// 
 	// Use the data stored in the T's root to 
 	// create a new intTreeNode as the root of this binary tree.
 	//    THE FOLLOWING USES RECURSION.
@@ -19,7 +17,25 @@ intBinTree::intBinTree(const intBinTree & T) {
 	// from T's leftsubtree
 	// Use the copy constructor to create a rightsubtree for this binary tree
 	// from T's rightsubtree
+
+	if(T.root == NULL) {
+		root = NULL;
+		numItems = 0;
+	} else {
+		root = copyNode(T.root);
+		numItems = T.numItems;
+	}	
+}
+
+intTreeNode *copyNode(intTreeNode *other) {
 	
+	if(other == NULL)
+		return NULL;
+	else {
+		intTreeNode* new_node = new intTreeNode(other->getData());
+		new_node->setLeftPtr(copyNode(other->getLeftChildPtr()));
+		new_node->setRightPtr(copyNode(other->getRightChildPtr()));
+		return new_node;
 }
 
 

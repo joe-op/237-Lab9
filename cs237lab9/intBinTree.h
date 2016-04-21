@@ -26,6 +26,8 @@ private:
 	//				  followed by the elements in the right subtree of current.
 	void inOrderTraversal(ostream & stream, intTreeNode * current);
 
+	intTreeNode * copyNode(intTreeNode *other);
+
 public:
 
 	// default constructor
