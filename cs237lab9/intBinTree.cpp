@@ -37,7 +37,7 @@ intTreeNode *copyNode(intTreeNode *other) {
 		new_node->setRightPtr(copyNode(other->getRightChildPtr()));
 		return new_node;
 }
-
+	
 
 intBinTree & intBinTree::operator= (const intBinTree & T) {
 	
