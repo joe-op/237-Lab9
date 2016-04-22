@@ -1,4 +1,5 @@
-#include "intBinTree.h"     
+#include "intBinTree.h"
+#include "intTreeNode.h"
 
 using namespace std;
 
@@ -25,26 +26,22 @@ intBinTree::intBinTree(const intBinTree & T) {
 		root = copyNode(T.root);
 		numItems = T.numItems;
 	}	
-}
-
-intTreeNode *copyNode(intTreeNode *other) {
-	
-	if(other == NULL)
-		return NULL;
-	else {
-		intTreeNode* new_node = new intTreeNode(other->getData());
-		new_node->setLeftPtr(copyNode(other->getLeftChildPtr()));
-		new_node->setRightPtr(copyNode(other->getRightChildPtr()));
-		return new_node;
-}
-	
+}	
 
 intBinTree & intBinTree::operator= (const intBinTree & T) {
 	
 	if (T.root == this->root)
 		return *this;
 
-	//TODO: free the tree nodes, then do deep copy
+	delete root;
+	if (T.root == NULL) {
+		root = NULL;
+		numItems = 0;
+	}
+	else {
+		root = copyNode(T.root);
+		numItems = T.numItems;
+	}
 
 	return *this;
 }
@@ -79,6 +76,29 @@ intTreeNode* intBinTree::getRightSubTree() const {
 
 
 void intBinTree::addLeft(int num) {
+
+	intTreeNode* nodeToAddPtr = new intTreeNode(num);
+	if (root == NULL) {
+		root = nodeToAddPtr;
+	}
+	else {
+		intTreeNode* current = root;
+		while (current->getLeftChildPtr() != NULL && current->getRightChildPtr() != NULL) {
+			current = current->getLeftChildPtr();
+		}
+		if (current->getLeftChildPtr() == NULL) {
+			current->setLeftPtr(nodeToAddPtr);
+		}
+		else {
+			current->setRightPtr(nodeToAddPtr);
+		}
+	}
+
+
+
+
+
+
 	// TODO: use the following pseudocode
 
 	// Create a new intTreeNode pointed to by, say nodeToAddPtr, 
@@ -101,15 +121,53 @@ void intBinTree::addLeft(int num) {
 
 
 void intBinTree::addRight(int num) {
-	// TODO: similar to addLeft above.
-
-	// But this time, loop through the right child of currentPtr until 
-	// a node is found that DOES NOT have two children
+	intTreeNode* nodeToAddPtr = new intTreeNode(num);
+	if (root == NULL) {
+		root = nodeToAddPtr;
+	}
+	else {
+		intTreeNode* current = root;
+		while (current->getLeftChildPtr() != NULL && current->getRightChildPtr() != NULL) {
+			current = current->getRightChildPtr();
+		}
+		if (current->getRightChildPtr() == NULL) {
+			current->setRightPtr(nodeToAddPtr);
+		}
+		else {
+			current->setLeftPtr(nodeToAddPtr);
+		}
+	}
 
 }
 
 
 void intBinTree::deleteLeft() {
+
+	if (root != NULL) {
+		intTreeNode *currentPtr = root;
+		intTreeNode *currentParentPtr = NULL;
+		while (currentPtr->getLeftChildPtr() != NULL) {
+			currentParentPtr = currentPtr;
+			currentPtr = currentPtr->getLeftChildPtr();
+		}
+		if (currentPtr == root) {
+			intTreeNode *tempPtr = root;
+			root = tempPtr->getRightChildPtr();
+			delete tempPtr;
+		}
+		else if (currentPtr->getRightChildPtr() == NULL) {
+			currentParentPtr->setLeftPtr(NULL);
+			delete currentPtr;
+		}
+		else {
+			currentParentPtr->setLeftPtr(currentParentPtr->getRightChildPtr());
+			delete currentPtr;
+		}
+	}
+
+
+
+
 	//TODO: use the following pseudocode
 	
 	// Initialize currrentPtr to the root.
@@ -126,16 +184,34 @@ void intBinTree::deleteLeft() {
 	//     delete currentPtr
 	//   else
 	//     set the left child of the parent of currentPtr to be the
-	//       right child of churrentPtr
+	//       right child of currentPtr
 	//     delete currentPtr
 }
 
 
 void intBinTree::deleteRight() {
-	// TODO: similar to deleteLeft above
-
-	// But this time, Loop through the right child of currentPtr until a node is
-	//   found that does not have a right child. 
+	
+	if (root != NULL) {
+		intTreeNode *currentPtr = root;
+		intTreeNode *currentParentPtr = NULL;
+		while (currentPtr->getRightChildPtr() != NULL) {
+			currentParentPtr = currentPtr;
+			currentPtr = currentPtr->getRightChildPtr();
+		}
+		if (currentPtr == root) {
+			intTreeNode *tempPtr = root;
+			root = tempPtr->getLeftChildPtr();
+			delete tempPtr;
+		}
+		else if (currentPtr->getLeftChildPtr() == NULL) {
+			currentParentPtr->setRightPtr(NULL);
+			delete currentPtr;
+		}
+		else {
+			currentParentPtr->setRightPtr(currentParentPtr->getLeftChildPtr());
+			delete currentPtr;
+		}
+	}
 }
 
 
@@ -148,6 +224,18 @@ void intBinTree::inOrderTraversal(ostream & stream, intTreeNode * current) {
 		}
 
 	}
+
+intTreeNode * intBinTree::copyNode(intTreeNode * other)
+{
+	if (other == NULL)
+		return NULL;
+	else {
+		intTreeNode* new_node = new intTreeNode(other->getData());
+		new_node->setLeftPtr(copyNode(other->getLeftChildPtr()));
+		new_node->setRightPtr(copyNode(other->getRightChildPtr()));
+		return new_node;
+	}
+}
 
 
 ostream & operator<< (ostream & stream, const intBinTree & T) {

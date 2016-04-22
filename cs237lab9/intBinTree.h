@@ -25,10 +25,12 @@ private:
 	//				  followed by the element at current, 
 	//				  followed by the elements in the right subtree of current.
 	void inOrderTraversal(ostream & stream, intTreeNode * current);
-
 	intTreeNode * copyNode(intTreeNode *other);
 
+	
+
 public:
+	
 
 	// default constructor
 	// Precondition 
@@ -127,7 +129,6 @@ public:
 	//                Suppose x has a left child, say y, and the parent of x is p.
 	//                Then node x is deleted and y is made the right child of p.
 	void deleteRight();
-
 
 
 	// Precondition: T is defined.

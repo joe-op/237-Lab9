@@ -29,7 +29,7 @@
     <ClCompile Include="intBinTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testIntTreeNode.cpp">
+    <ClCompile Include="testIntBinTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

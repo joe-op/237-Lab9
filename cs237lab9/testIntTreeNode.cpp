@@ -1,5 +1,11 @@
 #include "intTreeNode.h"
 
+/*
+ * CS237 Lab 9
+ * Joe Opseth
+ * 21 April 2016
+ */
+
 int default_constructor();
 int alternate_constructor(int num);
 int get_data();
